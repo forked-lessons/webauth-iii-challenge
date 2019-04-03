@@ -2,7 +2,8 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const secret = require('../api/secrets').jwtSecret;
+require('dotenv').config();
+const secret = process.env.JWT_SECRET;
 const Users = require('../users/users-model.js');
 
 router.post('/register', (req, res) => {
