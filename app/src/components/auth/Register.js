@@ -52,6 +52,9 @@ class Register extends Component {
           >
             Submit
           </button>
+          <a href="/register">
+            <h4>Still Need to Register? Click here to continue</h4>
+          </a>
         </form>
       </div>
     );

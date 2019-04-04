@@ -1,63 +1,51 @@
-import React, { Component } from 'react';
+import React from 'react';
+import './auth.scss';
 import axios from 'axios';
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: ''
-    };
-  }
-
-  inputChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-  loginUser = () => {
-    axios
-      .post('http://localhost:5000/api/auth/login', {
-        username: this.state.username,
-        password: this.state.password
-      })
-      .then(res => {
-        this.props.authUser(res.data.token);
-        console.log(res.data.token);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+class Login extends React.Component {
+  state = {
+    username: 'Daniel',
+    password: 'test'
   };
 
   render() {
     return (
       <div>
-        <h1>Login</h1>
-        <form>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="username" />
           <input
-            type="text"
-            name="username"
-            placeholder="username"
             value={this.state.username}
-            onChange={e => this.inputChange(e)}
+            onChange={this.handleInputChange}
+            id="username"
+            type="text"
           />
+          <label htmlFor="password" />
           <input
-            type="password"
-            placeholder="password"
             value={this.state.password}
-            onChange={e => this.inputChange(e)}
-            name="password"
+            onChange={this.handleInputChange}
+            id="password"
+            type="password"
           />
-          <button
-            onClick={e => {
-              e.preventDefault();
-              this.loginUser();
-            }}
-          >
-            Submit
-          </button>
+          <button type="submit">Login</button>
         </form>
       </div>
     );
   }
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    const endpoint = 'http://localhost:5000/api/auth/login';
+
+    axios.post(endpoint, this.state).then(res => {
+      console.log('Login Response', res);
+      localStorage.setItem('token', res.data.token);
+    });
+  };
+
+  handleInputChange = e => {
+    const { id, value } = e.target;
+    this.setState({ [id]: value });
+  };
 }
 
 export default Login;
