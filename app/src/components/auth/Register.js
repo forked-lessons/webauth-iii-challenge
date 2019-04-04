@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './auth.scss';
 class Register extends Component {
   constructor() {
     super();
@@ -8,27 +9,10 @@ class Register extends Component {
       password: ''
     };
   }
-  inputChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-  registerUser = () => {
-    axios
-      .post('http://localhost:5000/api/auth/register', {
-        username: this.state.username,
-        password: this.state.password
-      })
-      .then(res => {
-        console.log('registered');
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
   render() {
     return (
       <div>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <h1>Register</h1>
           <input
             type="text"
@@ -44,21 +28,43 @@ class Register extends Component {
             onChange={e => this.inputChange(e)}
             name="password"
           />
-          <button
-            onClick={e => {
-              e.preventDefault();
-              this.registerUser();
-            }}
-          >
-            Submit
-          </button>
-          <a href="/register">
-            <h4>Still Need to Register? Click here to continue</h4>
-          </a>
+          <button type="submit">Submit</button>
         </form>
       </div>
     );
   }
+  inputChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    const endpoint = 'http://localhost:5000/api/auth/register';
+
+    axios
+      .post(endpoint, this.state)
+      .then(res => {
+        console.log('Login Response', res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 }
+//   registerUser = () => {
+//     axios
+//       .post('http://localhost:5000/api/auth/register', {
+//         username: this.state.username,
+//         password: this.state.password
+//       })
+//       .then(res => {
+//         console.log('registered');
+//       })
+//       .catch(err => {
+//         console.log(err);
+//       });
+//   };
+// }
 
 export default Register;

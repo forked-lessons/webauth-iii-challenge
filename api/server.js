@@ -5,16 +5,16 @@ const usersRouter = require('../users/users-router');
 const authRouter = require('../auth/auth-router');
 const restricted = require('../auth/restricted-middleware');
 const server = express();
+server.use(cors());
 
 server.use(helmet());
 server.use(express.json());
-server.use(cors());
 
 server.get('/', (req, res) => {
   res.send('API ONLINE');
 });
 
-server.use('/api/users', restricted, usersRouter);
+server.use('/api/users', usersRouter);
 server.use('/api/auth', authRouter);
 
 module.exports = server;

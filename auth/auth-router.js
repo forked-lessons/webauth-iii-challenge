@@ -39,6 +39,22 @@ router.post('/login', (req, res) => {
     });
 });
 
+router.get('/logout', (req, res) => {
+  if (req.token) {
+    req.session.destroy(err => {
+      if (err) {
+        res.status(500).json({
+          message: 'Logout Failure, You are trapped'
+        });
+      } else {
+        res.status(200).json({ message: 'l8ter' });
+      }
+    });
+  } else {
+    res.status(200).json({ message: 'cya' });
+  }
+});
+
 function generateToken(user) {
   const payload = {
     subject: user.id,
