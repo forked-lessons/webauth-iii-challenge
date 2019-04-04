@@ -10,9 +10,11 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <h1>Login</h1>
+        <form onSubmit={this.handleSubmit} className="auth-form">
           <label htmlFor="username" />
           <input
+            className="auth-input"
             value={this.state.username}
             onChange={this.handleInputChange}
             id="username"
@@ -20,6 +22,7 @@ class Login extends React.Component {
           />
           <label htmlFor="password" />
           <input
+            className="auth-input"
             value={this.state.password}
             onChange={this.handleInputChange}
             id="password"
@@ -38,6 +41,7 @@ class Login extends React.Component {
 
     axios.post(endpoint, this.state).then(res => {
       console.log('Login Response', res);
+
       localStorage.setItem('token', res.data.token);
     });
   };

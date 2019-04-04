@@ -34,7 +34,7 @@ class App extends Component {
   };
 }
 
-function Home(props) {
+function Home() {
   return <h1>Home Component</h1>;
 }
 

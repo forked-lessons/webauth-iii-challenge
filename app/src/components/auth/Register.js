@@ -12,9 +12,10 @@ class Register extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <h1>Register</h1>
+        <h1>Register</h1>
+        <form onSubmit={this.handleSubmit} className="auth-form">
           <input
+            className="auth-input"
             type="text"
             name="username"
             placeholder="username"
@@ -22,6 +23,7 @@ class Register extends Component {
             onChange={e => this.inputChange(e)}
           />
           <input
+            className="auth-input"
             type="password"
             placeholder="password"
             value={this.state.password}
@@ -52,19 +54,5 @@ class Register extends Component {
       });
   };
 }
-//   registerUser = () => {
-//     axios
-//       .post('http://localhost:5000/api/auth/register', {
-//         username: this.state.username,
-//         password: this.state.password
-//       })
-//       .then(res => {
-//         console.log('registered');
-//       })
-//       .catch(err => {
-//         console.log(err);
-//       });
-//   };
-// }
 
 export default Register;
