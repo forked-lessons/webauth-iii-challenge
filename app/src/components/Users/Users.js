@@ -10,11 +10,11 @@ const Users = () => {
     axios
       .get(endpoint)
       .then(res => {
+        console.log(res.data);
         setUsers(res.data);
-        // console.log(res.data);
       })
       .catch(error => {
-        console.error('USERS ERROR', error);
+        console.log('USERS ERROR');
       });
   }, []);
   // };
