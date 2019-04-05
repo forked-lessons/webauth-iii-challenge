@@ -1,55 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './auth.scss';
 import axios from 'axios';
-class Login extends React.Component {
-  state = {
-    username: 'Daniel',
-    password: 'test'
-  };
 
-  render() {
-    return (
-      <div>
-        <h1>Login</h1>
-        <form onSubmit={this.handleSubmit} className="auth-form">
-          <label htmlFor="username" />
-          <input
-            className="auth-input"
-            value={this.state.username}
-            onChange={this.handleInputChange}
-            id="username"
-            type="text"
-          />
-          <label htmlFor="password" />
-          <input
-            className="auth-input"
-            value={this.state.password}
-            onChange={this.handleInputChange}
-            id="password"
-            type="password"
-          />
-          <button type="submit">Login</button>
-        </form>
-      </div>
-    );
-  }
+const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-
     const endpoint = 'http://localhost:5000/api/auth/login';
-
-    axios.post(endpoint, this.state).then(res => {
+    axios.post(endpoint, { username, password }).then(res => {
       console.log('Login Response', res);
-
       localStorage.setItem('token', res.data.token);
     });
   };
 
-  handleInputChange = e => {
-    const { id, value } = e.target;
-    this.setState({ [id]: value });
-  };
-}
+  return (
+    <>
+      <h1>Login</h1>
+      <form onSubmit={handleSubmit} className="auth-form">
+        <label htmlFor="username" />
+        <input
+          className="auth-input"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          id="username"
+          type="text"
+        />
+        <label htmlFor="password" />
+        <input
+          className="auth-input"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          id="password"
+          type="password"
+        />
+        <button type="submit">Login</button>
+      </form>
+    </>
+  );
+};
 
 export default Login;
